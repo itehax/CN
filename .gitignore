@@ -4,3 +4,9 @@
 **/bin/**
 **/tmp/**
 **.out
+teoria/*.aux
+teoria/*.fls
+teoria/*.log
+teoria/*.synct*
+teoria/*.toc
+teoria/*.fdb*

@@ -111,6 +111,36 @@ L'inequazione stabilisce un limite superiore all'effetto relativo di una variazi
 È possibile migliorare il condizionamento di un problema mediante tecniche di precondizionamento, selezione di algoritmi numerici più stabili, o riformulazione del problema stesso. Queste strategie possono aiutare a ottenere soluzioni più precise e affidabili, anche in presenza di problemi inizialmente mal condizionati.
 
 
+\subsection{Esempio di ben e mal condizionamento}
+\subsubsection*{Esempio di mal condizionamento}
+Andremo a studiare il condizionamento della somma, dimostrando che è un operazione mal condizionata.
+l'operazione in questione è la funzione $f(x+y) = x + y$.
+
+Dati $x,y \in \Re$ prendiamo come dati perturbati,  
+\begin{itemize}
+ \item $\tilde{x} = x(1 + \epsilon_1)$, in questo caso $\epsilon_1$ è l'errore relativo ad $x$ in quanto $E_a = |\tilde{x} - x| = | x \epsilon_1 |$ e dunque $E_r = \frac{|x \epsilon_1 |}{|x|} = \epsilon_1 $
+ \item $\tilde{y} = y(1 + \epsilon_2)$ , in questo caso $\epsilon_2$ è l'errore relativo ad $y$ come wlog abbiamo mostrato sopra.
+\end{itemize}
+
+
+Andando a studiare il condizionamento dell'operazione, sostituendo nel membro destro questi valori e sfruttando la diseq triangolare otteniamo: $$E_{out} = \frac{|(x + x\epsilon_1 + y + y\epsilon_2) - (x + y)|}{|x + y|} = \frac{|x\epsilon_1 + y\epsilon_2|}{|x + y|} \leq \frac{|x|}{|x + y|} |\epsilon_1| + \frac{|y|}{|x + y|} |\epsilon_2| $$
+
+In questo caso, $\frac{|x|}{|x + y|}$  e $\frac{|y|}{|x + y|}$ sono i nostri $k$. 
+
+Notiamo subito che se $x+y$ sono opposti e molto vicini in modulo (esempio cancellazione numerica), il valore tenderà ad infinito, il che è contro il fatto che $k$ deve essere piccolo, rendendo dunque l'operazione mal condizonata. 
+
+\subsubsection*{Esempio di ben condizionamento}
+Per quanto riguarda un operazione ben condizionata, prendiamo come esempio la moltiplicazione, dunque $f(x*y) = x*y$.
+Utilizzando i dati perturbati in precendeza, calcoliamo il prodotto dei valori perturbati:
+$$\tilde{x}\tilde{y} = [x(1 + \epsilon_1)] \cdot [y(1 + \epsilon_2) = xy(1 + \epsilon_1 + \epsilon_2 + \epsilon_1\epsilon_2)$$
+
+sostituendo tali valori nella formula del condizionamento, otteniamo $$\frac{|xy(1 + \epsilon_1 + \epsilon_2 + \epsilon_1\epsilon_2) - xy|}{|xy|} = \frac{|xy(\epsilon_1 + \epsilon_2 + \epsilon_1\epsilon_2) |}{|xy|} = |\epsilon_1 + \epsilon_2 + \epsilon_1\epsilon_2| \leq |\epsilon_1| + |\epsilon_2| + |\epsilon_1\epsilon_2| $$ per diseq triangolare.
+
+Sfruttando il fatto che $(a-b)^2 \geq 0 \implies ab \leq \frac{a^2 + b^2}{2}$ posso affermare che $$|\epsilon_1| + |\epsilon_2| + |\epsilon_1\epsilon_2| \leq |\epsilon_1| + |\epsilon_2| + \frac{\epsilon_1^2 + \epsilon_2^2}{2} $$ 
+ed in quanto $\epsilon < 1 \implies |\epsilon| \geq |\epsilon^2| $
+arrivo a $$|\epsilon_1| + |\epsilon_2| + \frac{\epsilon_1^2 + \epsilon_2^2}{2} \leq \frac{3}{2} |\epsilon_1| + \frac{3}{2} |\epsilon_2|$$
+
+In questo caso i $k$ sono uguali a $\frac{3}{2}$ e dunque l'operazione è ben condizionata.
 
 \section{Metodi per la ricerca di radici di equazioni non lineari}
 \subsection{Metodo di bisezione}
